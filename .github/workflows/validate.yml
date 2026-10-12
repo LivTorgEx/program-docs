@@ -1,0 +1,66 @@
+name: Validate program docs
+
+on:
+  pull_request:
+    paths:
+      - "src/content/docs/**"
+      - "src/content/i18n/**"
+      - "src/content.config.ts"
+      - "astro.config.mjs"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/**"
+  push:
+    branches: [main]
+    paths:
+      - "src/content/docs/**"
+      - "src/content/i18n/**"
+      - "src/content.config.ts"
+      - "astro.config.mjs"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out program docs
+        uses: actions/checkout@v4
+
+      - name: Check out QuantFlow
+        uses: actions/checkout@v4
+        with:
+          repository: LivTorgEx/trading-platform-rust
+          path: quantflow-platform
+          submodules: recursive
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.10.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install docs dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build documentation site
+        run: pnpm build
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Validate examples and built-ins against QuantFlow
+        run: >-
+          cargo run --manifest-path quantflow-platform/Cargo.toml
+          -p quantflow --example validate_documentation --
+          "$GITHUB_WORKSPACE/src/content/docs"

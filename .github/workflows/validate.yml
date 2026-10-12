@@ -32,13 +32,6 @@ jobs:
       - name: Check out program docs
         uses: actions/checkout@v4
 
-      - name: Check out QuantFlow
-        uses: actions/checkout@v4
-        with:
-          repository: LivTorgEx/trading-platform-rust
-          path: quantflow-platform
-          submodules: recursive
-
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -55,12 +48,3 @@ jobs:
 
       - name: Build documentation site
         run: pnpm build
-
-      - name: Set up Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Validate examples and built-ins against QuantFlow
-        run: >-
-          cargo run --manifest-path quantflow-platform/Cargo.toml
-          -p quantflow --example validate_documentation --
-          "$GITHUB_WORKSPACE/src/content/docs"

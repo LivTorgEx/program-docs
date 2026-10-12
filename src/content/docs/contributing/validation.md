@@ -30,14 +30,14 @@ the site when changes reach `main`.
 
 ## Validate against the runtime
 
-CI checks every fenced `quantflow` example with the current compiler and checks
-that the documented built-in names match the Rust function registry. The
-validation runs from both repositories:
+The docs repository builds the site whenever documentation changes. The Rust
+repository runs the QuantFlow compiler checks because its source is private:
+it checks every fenced `quantflow` example and compares the documented
+built-in names with the Rust function registry. It runs when QuantFlow changes
+and once a day, so docs-only changes are picked up by the next scheduled run.
 
-- A docs change checks out `LivTorgEx/trading-platform-rust` and validates this
-  content against its current QuantFlow crate.
-- A QuantFlow implementation change checks out this repository and validates
-  the public reference against the changed crate.
+To check a documentation change immediately, dispatch the
+`Validate QuantFlow documentation` workflow in `LivTorgEx/trading-platform-rust`.
 
 When changing syntax or a built-in, update the relevant page in the same
 change. The validator expects the built-in list to be enclosed by the

@@ -25,8 +25,15 @@ Build the static site before publishing:
 pnpm build
 ```
 
-The output is written to `dist/`. The GitHub Pages workflow builds and deploys
-the site when changes reach `main`.
+The output is written to `dist/`. Each build also generates `llms.txt` as a
+compact index and `llms-full.txt` as a Markdown bundle from the source pages.
+The GitHub Pages workflow builds and deploys them with the site when changes
+reach `main`.
+
+The platform MCP server exposes the full bundle as
+`resource://quantflow-syntax`. It fetches and caches the public file server-side,
+so an in-product agent reads the docs through MCP without browser or direct
+network access.
 
 ## Validate against the runtime
 

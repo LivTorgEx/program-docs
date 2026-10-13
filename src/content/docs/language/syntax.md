@@ -1,6 +1,6 @@
 ---
 title: Syntax
-description: Expressions, paths, assignments, conditionals, and errors.
+description: Expressions, paths, assignments, loops, conditionals, and errors.
 ---
 
 # Syntax
@@ -48,8 +48,8 @@ segment, and the deepest path that was resolved.
 ## Assignments and programs
 
 A multiline program supports assignments, dotted object-path assignments,
-indented `if`/`else` blocks, conditional expressions, and `return`. Every
-program must return a value.
+indented `if`/`else` blocks, `for` loops over arrays, conditional expressions,
+and `return`. Every program must return a value.
 
 ```quantflow
 price = $.price
@@ -60,6 +60,29 @@ if risk > $.max_risk:
 
 return risk
 ```
+
+Use `for name in expression:` to visit each item in an array. The loop body must
+be indented with spaces; tabs are not supported. The expression is evaluated
+once before iteration, and a non-array value produces a runtime error:
+
+```quantflow
+total = 0
+for position in $.positions:
+    total = total + position.notional
+return total
+```
+
+All loops in one Program execution share a limit of 10,000 total iterations,
+including iterations in nested loops. A loop over an array with more than
+10,000 items fails immediately, and nested loops can reach the shared limit
+even when each individual array is smaller. Exceeding the limit produces a
+runtime error.
+
+The loop variable is temporarily bound for the loop. If a variable with the
+same name already existed, its previous value is restored afterward; otherwise
+the loop variable is removed. Other assignments made in the loop body remain
+in the Program's shared variable scope after the loop. A `return` in the body
+returns from the Program.
 
 A variable can refer to the current input with `$`. Dotted assignments update
 the local program value:
@@ -96,10 +119,12 @@ return $.arguments.quantity
 
 ## Deliberate limits
 
-QuantFlow does not support imports, loops, classes, function definitions, or
-arbitrary code execution. Programs can call only functions registered by their
-host. Hosts may provide different inputs and additional functions, so a program
-is portable only when its input and registered-function contract is portable.
+QuantFlow does not support imports, `while` loops, classes, function
+definitions, or arbitrary code execution. `for` loops are limited to arrays
+and the per-execution iteration budget described above. Programs can call only
+functions registered by their host. Hosts may provide different inputs and
+additional functions, so a program is portable only when its input and
+registered-function contract is portable.
 
 See [Built-in functions](built-ins/) for functions registered by the standard
 QuantFlow runtime.

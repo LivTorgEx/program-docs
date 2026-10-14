@@ -13,23 +13,31 @@ built-ins.
 
 ## `math`
 
-`math.abs`, `math.min`, `math.max`, `math.to_integer`, `math.to_decimal`,
-`math.decimal_places_to_step`, `math.negate`, `math.round`, `math.floor`,
+`math.abs`, `math.min`, `math.max`, `math.negate`, `math.round`, `math.floor`,
 `math.ceil`, `math.modulo`, and `math.clamp`.
 
-- `math.abs(value)` returns the absolute decimal value.
-- `math.min(value, ...)` and `math.max(value, ...)` take one or more decimals.
-- `math.to_integer(value)` accepts a decimal or decimal text and errors unless
-  the value is a whole number.
-- `math.to_decimal(value)` converts a decimal or decimal text to a decimal.
-- `math.decimal_places_to_step(places)` takes an integer from 0 through 28 and
-  returns the corresponding step as text.
-- `math.negate(value)`, `math.round(value)`, `math.floor(value)`, and
-  `math.ceil(value)` each take one decimal.
-- `math.modulo(dividend, divisor)` takes two decimals and rejects a zero
-  divisor.
-- `math.clamp(value, minimum, maximum)` takes three decimals and errors when
-  `minimum` is greater than `maximum`.
+- `math.abs(value)`, `math.negate(value)`, `math.round(value)`,
+  `math.floor(value)`, and `math.ceil(value)` accept a number or decimal and
+  preserve its type.
+- `math.min(value, ...)` and `math.max(value, ...)` accept one or more values
+  of the same numeric type.
+- `math.modulo(dividend, divisor)` takes two values of the same numeric type
+  and rejects a zero divisor.
+- `math.clamp(value, minimum, maximum)` takes three values of the same numeric
+  type and errors when `minimum` is greater than `maximum`.
+
+## `number`
+
+`number.from(value)` accepts a number, decimal, or numeric string and returns
+a number.
+
+## `decimal`
+
+`decimal.from(value)` accepts a number, decimal, or numeric string and returns
+a decimal.
+
+- `decimal.step_from_places(places)` accepts an integer from 0 through 28 as a
+  number, decimal, or numeric string and returns the corresponding step as text.
 
 ## `str`
 

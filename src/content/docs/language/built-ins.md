@@ -115,4 +115,14 @@ and symbol keys are opaque identifiers in the trading system, so do not use
 these helpers to prepare values for API calls, matching, persistence, or
 display. Pass the original identifier through unchanged.
 
+## `symbols`
+
+`symbols.get_from_base(symbol_key, provider_code, inst_type)` looks up a
+cross-exchange symbol using the source symbol's `base_asset`. The workflow host
+provides the symbol catalog at `$.symbols`; each record contains `symbol_key`
+and `base_asset`. Provider code and instrument type comparisons are exact.
+The function returns the matching symbol key, `null` when no match exists, and
+fails when more than one target matches. The target provider must differ from
+the source provider.
+
 <!-- QUANTFLOW_BUILTINS_END -->

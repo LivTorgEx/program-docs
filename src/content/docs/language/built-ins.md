@@ -106,14 +106,33 @@ equality.
 
 ## `symbol`
 
-`symbol.key`, `symbol.provider`, `symbol.exchange_symbol`, and
-`symbol.instrument_type`.
+`symbol.key`, `symbol.provider`, `symbol.exchange_symbol`,
+`symbol.instrument_type`, `symbol.round_price`, `symbol.round_qty`, and
+`symbol.contract_to_quantity`.
 
-These are legacy format-conversion helpers. `symbol.key` trims and lowercases
-its three inputs; the extraction helpers normalize case as well. Provider codes
-and symbol keys are opaque identifiers in the trading system, so do not use
-these helpers to prepare values for API calls, matching, persistence, or
-display. Pass the original identifier through unchanged.
+- `symbol.key(provider, exchange_symbol, instrument_type)` lowercases all three
+  non-empty components and combines them as
+  `provider#exchange_symbol#instrument_type`. It rejects `#` inside a component.
+- `symbol.provider(symbol_key)`, `symbol.exchange_symbol(symbol_key)`, and
+  `symbol.instrument_type(symbol_key)` return one component of that canonical
+  key. The key must contain exactly three non-empty components separated by
+  `#`.
+- `symbol.round_price(value, symbol_key)` rounds to the nearest positive
+  `price_tick_size`; midpoint values round away from zero.
+- `symbol.round_qty(value, symbol_key)` rounds toward zero to the symbol's
+  `qty_step_size`.
+- `symbol.contract_to_quantity(contracts, symbol_key)` multiplies the contract
+  count by the symbol's positive `contract_size`.
+
+The three metadata functions accept a number or decimal and preserve that
+numeric type in the result. They require a symbol metadata resolver in the
+runtime context and fail if the symbol or required metadata is unavailable.
+The resolver reads the host's existing symbol metadata cache; it should not
+query an exchange or database for each function call. `symbol.key` is the
+canonicalization boundary for newly constructed keys; extraction helpers
+preserve the spelling already present in a key. Do not use these helpers to
+format provider API requests: apply any documented provider wire-format
+conversion only in the outbound consumer mapping.
 
 ## `symbols`
 

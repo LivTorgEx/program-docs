@@ -81,11 +81,34 @@ equality.
 
 ## `object`
 
-`object.get`, `object.set`, and `object.values`.
+`object.create`, `object.clone`, `object.get`, `object.set`, and
+`object.values`.
 
+- `object.create()` returns a fresh empty object (`{}`). Each call creates an
+  independent object that can be populated without changing another value.
+- `object.clone(value)` returns a deep copy of an object, including its nested
+  objects and arrays. Populate the copy without changing the source value.
 - `object.get(value, key)` returns the value for a key, or `null` when absent.
-- `object.set(value, key, new_value)` returns a copy with that key set.
+- `object.set(value, key, new_value)` is deprecated. It remains available for
+  existing programs; use dotted assignment when populating an object instead.
 - `object.values(value)` returns an array of the object's values.
+
+Create a new request object and populate it with dotted assignments:
+
+```quantflow
+request = object.create()
+request.page = 1
+return request
+```
+
+Clone an existing object when you need to preserve its contents and modify the
+copy:
+
+```quantflow
+request = object.clone($.run_context)
+request.page = 1
+return request
+```
 
 ## `boolean`
 

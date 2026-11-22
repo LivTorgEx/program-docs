@@ -47,9 +47,11 @@ segment, and the deepest path that was resolved.
 
 ## Assignments and programs
 
-A multiline program supports assignments, dotted object-path assignments,
-indented `if`/`else` blocks, `for` loops over arrays, conditional expressions,
-and `return`. Every program must return a value.
+A standard expression program supports assignments, dotted object-path
+assignments, indented `if`/`else` blocks, `for` loops over arrays, conditional
+expressions, and `return`. Every expression program must return a value.
+Strategy bot programs use a host-specific effect form with a `fn main()` entry
+point and annotated event handlers; see [Bot strategy programs](../../bots/strategy-programs/).
 
 ```quantflow
 price = $.price
@@ -119,12 +121,14 @@ return $.arguments.quantity
 
 ## Deliberate limits
 
-QuantFlow does not support imports, `while` loops, classes, function
-definitions, or arbitrary code execution. `for` loops are limited to arrays
-and the per-execution iteration budget described above. Programs can call only
-functions registered by their host. Hosts may provide different inputs and
-additional functions, so a program is portable only when its input and
-registered-function contract is portable.
+The standard expression-program form does not support imports, `while` loops,
+classes, function definitions, or arbitrary code execution. `for` loops are
+limited to arrays and the per-execution iteration budget described above.
+Programs can call only functions registered by their host. Hosts may provide
+different inputs and additional functions, so a program is portable only when
+its input and registered-function contract is portable. The bot host's
+`quantflow_bot_v1` effect form adds its documented entry point and event
+handlers; see [Bot strategy programs](../../bots/strategy-programs/).
 
 See [Built-in functions](built-ins/) for functions registered by the standard
 QuantFlow runtime.

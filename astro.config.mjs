@@ -30,6 +30,10 @@ export default defineConfig({
           items: [{ autogenerate: { directory: "workflows" } }],
         },
         {
+          label: "Bot strategies",
+          items: [{ autogenerate: { directory: "bots" } }],
+        },
+        {
           label: "Signals",
           items: [{ autogenerate: { directory: "signals" } }],
         },

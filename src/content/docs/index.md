@@ -23,14 +23,20 @@ arbitrary code.
 - [Get started](getting-started/) with a small analysis program.
 - Learn [QuantFlow syntax](language/syntax/) and the [built-in functions](language/built-ins/).
 - See the input contract for [workflow Program nodes](workflows/program-nodes/).
+- Write [bot strategy programs](bots/strategy-programs/) that run directly in the bot runtime, without requiring WASM modules.
 - Read the current direction for [signal programs](signals/overview/).
 - Embed the compiler and runtime with the [Rust integration guide](rust/integration/).
 
 ## Where it is used
 
-QuantFlow is currently used by API mappings and workflow **Program** nodes.
-For signal and bot logic, the planned authoring interface is QuantFlow. We do
-not plan a separate declarative rule format for those programs.
+QuantFlow is currently used by API mappings, workflow **Program** nodes, and
+strategy-version bot legs. Bot legs use the `quantflow_bot_v1` runtime and can
+run QuantFlow source directly; attached Rust WASM modules are optional. See
+[Bot strategy programs](bots/strategy-programs/) for indicators, event handlers,
+order actions, and a working QuantFlow-only example.
+
+The signal service is not implemented yet. We do not plan a separate
+declarative rule format for signal programs.
 
 ## Signal analysis status
 
@@ -38,7 +44,7 @@ The signal service is not implemented yet. The first version is intended to
 calculate supported indicators in the Rust host with `ta-rs`, then pass the
 needed values to QuantFlow for a small decision such as detecting a price
 crossing an indicator line. The language and runtime currently have no
-indicator-service input contract, signal-emission API, or MRC host integration.
+signal-service input contract, signal-emission API, or MRC host integration.
 
 See [Signal programs](signals/overview/) for the boundary between the current
 runtime and that planned service.

@@ -48,6 +48,9 @@ fn main(signal):
     return rsi
 ```
 
+See the [built-in TA indicator reference](../indicators/built-in-indicators/)
+for every supported call, parameter shape, and output field.
+
 The program timeframe is in seconds and selects the context for direct calls
 such as `ta.rsi(14).value`. The worker prepares the required candle history and
 calculates the current values locally; a property read does not call the

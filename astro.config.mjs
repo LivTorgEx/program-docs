@@ -26,6 +26,10 @@ export default defineConfig({
           items: [{ autogenerate: { directory: "language" } }],
         },
         {
+          label: "Indicators",
+          items: [{ autogenerate: { directory: "indicators" } }],
+        },
+        {
           label: "Workflow programs",
           items: [{ autogenerate: { directory: "workflows" } }],
         },

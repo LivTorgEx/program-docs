@@ -167,4 +167,12 @@ The function returns the matching symbol key, `null` when no match exists, and
 fails when more than one target matches. The target provider must differ from
 the source provider.
 
+## Host-specific TA indicators
+
+Bot strategy programs also have access to the host-registered `ta.*` indicator
+namespace. Its indicator calls and output fields are listed in the
+[built-in TA indicator reference](../indicators/built-in-indicators/). Workflow
+Programs receive screener data through a `market_data` node; see
+[screener results in workflow programs](../workflows/program-nodes/#using-screener-results).
+
 <!-- QUANTFLOW_BUILTINS_END -->

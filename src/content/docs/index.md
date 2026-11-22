@@ -21,9 +21,13 @@ arbitrary code.
 ## Choose a guide
 
 - [Get started](getting-started/) with a small analysis program.
-- Learn [QuantFlow syntax](language/syntax/) and the [built-in functions](language/built-ins/).
+- Learn [QuantFlow syntax](language/syntax/) and the
+  [built-in functions](language/built-ins/).
+- Browse the [built-in TA indicators](indicators/built-in-indicators/)
+  available to bot programs and workflow screeners.
 - See the input contract for [workflow Program nodes](workflows/program-nodes/).
-- Write [bot strategy programs](bots/strategy-programs/) that run directly in the bot runtime, without requiring WASM modules.
+- Write [bot strategy programs](bots/strategy-programs/) that run directly in
+  the bot runtime, without requiring WASM modules.
 - Read the current direction for [signal programs](signals/overview/).
 - Embed the compiler and runtime with the [Rust integration guide](rust/integration/).
 
